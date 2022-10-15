@@ -13,4 +13,12 @@ class BookController {
     def list() {
         render view: 'list', model: [books: books.values()]
     }
+
+    def delete() {
+        try {
+            books.remove(Integer.parseInt(params.id))
+        } catch (Exception ignored) {
+        }
+        redirect(action: 'list')
+    }
 }
