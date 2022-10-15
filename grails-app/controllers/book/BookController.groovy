@@ -15,10 +15,21 @@ class BookController {
     }
 
     def delete() {
-        try {
-            books.remove(Integer.parseInt(params.id))
-        } catch (Exception ignored) {
+        if (params.id != null) {
+            try {
+                books.remove(Integer.parseInt(params.id))
+            } catch (NumberFormatException ignored) {
+            }
         }
+        redirect(action: 'list')
+    }
+
+    def save() {
+        if (params.title != null && params.author != null) {
+            int id = books.size() + 1
+            books.put(id, new Book(id, params.title, params.author))
+        }
+
         redirect(action: 'list')
     }
 }
